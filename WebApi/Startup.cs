@@ -25,7 +25,7 @@ public class Startup
         })
         .AddJwtBearer(Consts.MY_AUTH0_SCHEME, options =>
         {
-            options.Authority = "https://dev-damienbod.eu.auth0.com/";
+            options.Authority = Consts.MY_AUTH0_ISS;
             options.Audience = "https://auth0-api1";
             options.TokenValidationParameters = new TokenValidationParameters
             {
