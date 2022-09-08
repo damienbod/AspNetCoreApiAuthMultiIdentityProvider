@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using OpenIddict.Validation.AspNetCore;
+
 namespace WebApi;
 
 public class Startup
@@ -60,9 +61,10 @@ public class Startup
                     var token = authorization.Substring("Bearer ".Length).Trim();
                     var jwtHandler = new JwtSecurityTokenHandler();
 
-                    if(jwtHandler.CanReadToken(token)) // it's a self contained access token and not encrypted
+                    // it's a self contained access token and not encrypted
+                    if (jwtHandler.CanReadToken(token)) 
                     {
-                        var issuer = jwtHandler.ReadJwtToken(token).Issuer; //.Equals("B2C-Authority"))
+                        var issuer = jwtHandler.ReadJwtToken(token).Issuer;
                         if(issuer == Consts.MY_OPENIDDICT_ISS) // OpenIddict
                         {
                             return OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
