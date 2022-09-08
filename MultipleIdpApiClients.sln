@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{F157F581-1C3D-420B-BCAF-42424BC7078F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "IdentityProvider\IdentityProvider.csproj", "{C18DA1E5-4019-4AD9-AD32-F89A6B972946}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{E7FCAA8E-F5A3-4DCB-8FF0-45442C1B45D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorOpenIddictClient", "RazorOpenIddictClient\RazorOpenIddictClient.csproj", "{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorAzureADClient", "RazorAzureADClient\RazorAzureADClient.csproj", "{6C3342E1-2FB2-4AED-BCC2-019A242A2003}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorAuth0Client", "RazorAuth0Client\RazorAuth0Client.csproj", "{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docs", "_docs", "{10139D91-F048-4CB8-B756-0DF7BA31B2A6}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F157F581-1C3D-420B-BCAF-42424BC7078F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F157F581-1C3D-420B-BCAF-42424BC7078F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F157F581-1C3D-420B-BCAF-42424BC7078F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F157F581-1C3D-420B-BCAF-42424BC7078F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18DA1E5-4019-4AD9-AD32-F89A6B972946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18DA1E5-4019-4AD9-AD32-F89A6B972946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18DA1E5-4019-4AD9-AD32-F89A6B972946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18DA1E5-4019-4AD9-AD32-F89A6B972946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C3342E1-2FB2-4AED-BCC2-019A242A2003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C3342E1-2FB2-4AED-BCC2-019A242A2003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C3342E1-2FB2-4AED-BCC2-019A242A2003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C3342E1-2FB2-4AED-BCC2-019A242A2003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120} = {E7FCAA8E-F5A3-4DCB-8FF0-45442C1B45D8}
+		{6C3342E1-2FB2-4AED-BCC2-019A242A2003} = {E7FCAA8E-F5A3-4DCB-8FF0-45442C1B45D8}
+		{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC} = {E7FCAA8E-F5A3-4DCB-8FF0-45442C1B45D8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {407B3490-E126-48D6-A91F-129781E49FEF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Data from server protected with OpenIddict:</h1>
+
+    @foreach (string item in @Model.Data)
+    {
+        <p>@item</p>
+    }
+
+</div>
