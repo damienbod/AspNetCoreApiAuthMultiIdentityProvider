@@ -31,19 +31,17 @@ public class AllSchemesHandler : AuthorizationHandler<AllSchemesRequirement>
                 && c.Value == "naWWz6gdxtbQ68Hd2oAehABmmGM9m1zJ");
             if (azpClaim != null)
             {
-                // "azp": "naWWz6gdxtbQ68Hd2oAehABmmGM9m1zJ",
                 context.Succeed(requirement);
             }
         }
 
         if (issuer == Consts.MY_AAD_ISS) // AAD
         {
-            // "azp": "46d2f651-813a-4b5c-8a43-63abcb4f692c",
+            // "azp": "--your-azp-claim-value--",
             var azpClaim = context.User.Claims.FirstOrDefault(c => c.Type == "azp"
                 && c.Value == "46d2f651-813a-4b5c-8a43-63abcb4f692c");
             if (azpClaim != null)
             {
-                // "azp": "naWWz6gdxtbQ68Hd2oAehABmmGM9m1zJ",
                 context.Succeed(requirement);
             }
         }
