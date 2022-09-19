@@ -8,3 +8,5 @@
 # Links
 
 https://docs.microsoft.com/en-us/aspnet/core/security/authentication/policyschemes
+
+https://www.ietf.org/archive/id/draft-ietf-oauth-browser-based-apps-10.html
