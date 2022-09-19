@@ -102,7 +102,7 @@ public class Startup
                 //        .SetClientId("rs_dataEventRecordsApi")
                 //        .SetClientSecret("dataEventRecordsSecret");
 
-                // disable access token encyption for this
+                // disable access token encryption for this
                 options.UseAspNetCore();
 
                 // Register the System.Net.Http integration.
