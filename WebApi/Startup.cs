@@ -82,7 +82,7 @@ public class Startup
                     }
                 }
 
-                // We don't know with it is
+                // We don't know what it is
                 return Consts.MY_AAD_SCHEME;
             };
         });
