@@ -17,11 +17,12 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddTransient<SingleTenantApiService>();
+        services.AddTransient<MultiTenantApplicationApiService>();
         services.AddHttpClient();
 
         services.AddOptions();
 
-        string[]? initialScopes = Configuration.GetValue<string>("MyApiOne:ScopeForAccessToken")?.Split(' ');
+        string[]? initialScopes = Configuration.GetValue<string>("AzureADSingleApi:ScopeForAccessToken")?.Split(' ');
 
         services.AddMicrosoftIdentityWebAppAuthentication(Configuration)
             .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)

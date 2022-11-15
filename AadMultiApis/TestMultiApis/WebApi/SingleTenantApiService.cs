@@ -22,10 +22,10 @@ public class SingleTenantApiService
     {
         var client = _clientFactory.CreateClient();
 
-        var scope = _configuration["MyApiOne:ScopeForAccessToken"];
+        var scope = _configuration["AzureADSingleApi:ScopeForAccessToken"];
         var accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { scope });
 
-        client.BaseAddress = new Uri(_configuration["MyApiOne:ApiBaseAddress"]);
+        client.BaseAddress = new Uri(_configuration["AzureADSingleApi:ApiBaseAddress"]);
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

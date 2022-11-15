@@ -1,11 +1,11 @@
 ﻿@page
-@model RazorAzureAD.Pages.CallApiModel
+@model RazorAzureAD.Pages.DelegatedApiModel
 @{
-    ViewData["Title"] = "CallApi";
+    ViewData["Title"] = "DelegatedApi";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Call API</h1>
+<h1>Call Delegated Api</h1>
 <h6>gets the data from the Azure AD protected Web API</h6>
 
 @foreach(var item in Model.DataFromApi)

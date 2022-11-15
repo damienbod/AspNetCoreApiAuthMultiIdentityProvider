@@ -1,0 +1,16 @@
+﻿@page
+@model RazorAzureAD.Pages.ApplicationApiModel
+@{
+    ViewData["Title"] = "ApplicationApi";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Call Application Api</h1>
+<h6>gets the data from the Azure AD protected Web API</h6>
+
+@foreach(var item in Model.DataFromApi)
+{
+    <pre>@item</pre>
+}
+
+
