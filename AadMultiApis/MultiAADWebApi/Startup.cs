@@ -14,7 +14,6 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-
         services.AddAuthentication("multitenantapi")
             .AddMicrosoftIdentityWebApi(Configuration, "AzureADMultiApi", "multitenantapi");
 
