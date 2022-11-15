@@ -1,0 +1,16 @@
+﻿@page
+@model RazorAzureAD.Pages.ApplicationFailApiModel
+@{
+    ViewData["Title"] = "ApplicationFailApi";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Call Application Fail Api</h1>
+<h6>gets the data from the Azure AD protected Web API</h6>
+
+@foreach(var item in Model.DataFromApi)
+{
+    <pre>@item</pre>
+}
+
+

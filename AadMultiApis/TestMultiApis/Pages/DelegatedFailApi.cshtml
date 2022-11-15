@@ -1,0 +1,16 @@
+﻿@page
+@model RazorAzureAD.Pages.DelegatedFailApiModel
+@{
+    ViewData["Title"] = "DelegatedFailApi";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Call Delegated Fail to multi Api</h1>
+<h6>gets the data from the Azure AD protected Web API</h6>
+
+@foreach(var item in Model.DataFromApi)
+{
+    <pre>@item</pre>
+}
+
+
