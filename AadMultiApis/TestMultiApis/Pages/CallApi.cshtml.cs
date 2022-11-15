@@ -20,5 +20,7 @@ public class CallApiModel : PageModel
     public async Task OnGetAsync()
     {
         DataFromApi = await _apiService.GetApiDataAsync();
+
+        //var mustFail = await _apiService.GetApiDataAsync(true);
     }
 }

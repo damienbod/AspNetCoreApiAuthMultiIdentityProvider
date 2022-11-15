@@ -18,7 +18,7 @@ public class SingleTenantApiService
         _configuration = configuration;
     }
 
-    public async Task<List<string>> GetApiDataAsync()
+    public async Task<List<string>> GetApiDataAsync(bool testIncorrectMultiEndpoint = false)
     {
         var client = _clientFactory.CreateClient();
 
@@ -29,7 +29,17 @@ public class SingleTenantApiService
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        var response = await client.GetAsync("api/Values");
+        HttpResponseMessage response;
+        if (testIncorrectMultiEndpoint)
+        {
+            response = await client.GetAsync("api/Multi"); // must fail
+        }
+        else
+        {
+            response = await client.GetAsync("api/Single");
+        }
+
+
         if (response.IsSuccessStatusCode)
         {
             var responseContent = await response.Content.ReadAsStringAsync();

@@ -1,10 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Identity.Web;
+﻿using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
-using OpenIddict.Validation.AspNetCore;
 
 namespace WebApi;
 
