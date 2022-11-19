@@ -27,6 +27,9 @@ public class Startup
             policies.AddPolicy(Consts.MUTLI_AAD_POLICY, p =>
             {
                 // application access token
+                // "roles": [
+                //  "application-api-role"
+                // ],
                 // "azp": "967925d5-87ea-46e6-b0eb-1223c001fd77",
                 p.RequireClaim("azp", "967925d5-87ea-46e6-b0eb-1223c001fd77");
 
@@ -36,7 +39,7 @@ public class Startup
 
             policies.AddPolicy(Consts.SINGLE_AAD_POLICY, p =>
             {
-                // delegated access token
+                // delegated access token => "scp": "access_as_user",
                 // "azp": "46d2f651-813a-4b5c-8a43-63abcb4f692c",
                 p.RequireClaim("azp", "46d2f651-813a-4b5c-8a43-63abcb4f692c");
 
@@ -77,7 +80,7 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers().RequireAuthorization();
+            endpoints.MapControllers();
         });
     }
 }
