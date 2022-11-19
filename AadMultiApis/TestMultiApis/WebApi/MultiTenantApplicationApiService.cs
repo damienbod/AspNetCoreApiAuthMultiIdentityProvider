@@ -30,7 +30,6 @@ public class MultiTenantApplicationApiService
         var authResult = await app.AcquireTokenForClient(scopes)
             .ExecuteAsync();
 
-
         // 3. Use access token to access token
         var client = _clientFactory.CreateClient();
         client.BaseAddress = new Uri(_configuration["AzureADMultiApi:ApiBaseAddress"]);

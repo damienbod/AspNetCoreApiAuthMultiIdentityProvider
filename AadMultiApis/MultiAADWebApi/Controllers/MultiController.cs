@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
-[Authorize(AuthenticationSchemes = "multitenantapi")]
+[Authorize(AuthenticationSchemes = Consts.AAD_MULTI_SCHEME, Policy = Consts.MUTLI_AAD_POLICY)]
 [Route("api/[controller]")]
 public class MultiController : Controller
 {

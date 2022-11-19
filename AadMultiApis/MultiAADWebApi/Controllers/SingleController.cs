@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
-[Authorize(AuthenticationSchemes = "singletenantapi")]
+[Authorize(AuthenticationSchemes = Consts.AAD_SINGLE_SCHEME, Policy = Consts.SINGLE_AAD_POLICY)]
 [Route("api/[controller]")]
 public class SingleController : Controller
 {
