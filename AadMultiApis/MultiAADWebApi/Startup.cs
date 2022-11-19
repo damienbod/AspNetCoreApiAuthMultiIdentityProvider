@@ -1,4 +1,7 @@
-﻿using Microsoft.Identity.Web;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
 
 namespace WebApi;
@@ -14,13 +17,33 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddAuthentication("multitenantapi")
-            .AddMicrosoftIdentityWebApi(Configuration, "AzureADMultiApi", "multitenantapi");
+        services.AddAuthentication(Consts.AAD_MULTI_SCHEME)
+            .AddMicrosoftIdentityWebApi(Configuration, "AzureADMultiApi", Consts.AAD_MULTI_SCHEME);
 
-        services.AddAuthentication("singletenantapi")
-            .AddMicrosoftIdentityWebApi(Configuration, "AzureADSingleApi", "singletenantapi");
+        services.AddAuthentication(Consts.AAD_SINGLE_SCHEME)
+            .AddMicrosoftIdentityWebApi(Configuration, "AzureADSingleApi", Consts.AAD_SINGLE_SCHEME);
 
-        services.AddControllers();
+        services.AddAuthorization(policies =>
+        {
+            policies.AddPolicy(Consts.MUTLI_AAD_POLICY, p =>
+            {
+                p.RequireClaim("azp", "AScjLo16UadTQRIt2Zm1xLHVaEaE1feA");
+            });
+
+            policies.AddPolicy(Consts.SINGLE_AAD_POLICY, p =>
+            {
+                p.RequireClaim("azp", "AScjLo16UadTQRIt2Zm1xLHVaEaE1feA");
+            });
+        });
+
+        services.AddControllers(options =>
+        {
+            var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .AddAuthenticationSchemes(Consts.AAD_MULTI_SCHEME, Consts.AAD_SINGLE_SCHEME)
+                .Build();
+            options.Filters.Add(new AuthorizeFilter(policy));
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
