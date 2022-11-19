@@ -17,8 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorAuth0Client", "MultiId
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docs", "_docs", "{10139D91-F048-4CB8-B756-0DF7BA31B2A6}"
 	ProjectSection(SolutionItems) = preProject
-		MultiIdentityProvider\.github\workflows\dotnet.yml = MultiIdentityProvider\.github\workflows\dotnet.yml
-		MultiIdentityProvider\README.md = MultiIdentityProvider\README.md
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AadMultiApis", "AadMultiApis", "{82D16B5F-694A-47D4-8AA4-3ED277881CF4}"
