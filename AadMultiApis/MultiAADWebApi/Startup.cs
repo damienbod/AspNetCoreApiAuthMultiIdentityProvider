@@ -27,12 +27,22 @@ public class Startup
         {
             policies.AddPolicy(Consts.MUTLI_AAD_POLICY, p =>
             {
-                p.RequireClaim("azp", "AScjLo16UadTQRIt2Zm1xLHVaEaE1feA");
+                // application access token
+                // "azp": "967925d5-87ea-46e6-b0eb-1223c001fd77",
+                p.RequireClaim("azp", "967925d5-87ea-46e6-b0eb-1223c001fd77");
+
+                // client secret = 1, 2 if certificate is used
+                p.RequireClaim("azpacr", "1"); 
             });
 
             policies.AddPolicy(Consts.SINGLE_AAD_POLICY, p =>
             {
-                p.RequireClaim("azp", "AScjLo16UadTQRIt2Zm1xLHVaEaE1feA");
+                // delegated access token
+                // "azp": "46d2f651-813a-4b5c-8a43-63abcb4f692c",
+                p.RequireClaim("azp", "46d2f651-813a-4b5c-8a43-63abcb4f692c");
+
+                // client secret = 1, 2 if certificate is used
+                p.RequireClaim("azpacr", "1");
             });
         });
 
