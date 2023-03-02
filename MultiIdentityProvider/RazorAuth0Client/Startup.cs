@@ -35,7 +35,7 @@ public class Startup
         })
         .AddCookie(options =>
         {
-            options.Cookie.Name = "__Host-BlazorServer";
+            options.Cookie.Name = "__Host-auth0";
             options.Cookie.SameSite = SameSiteMode.Lax;
         })
         .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
