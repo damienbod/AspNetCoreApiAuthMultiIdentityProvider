@@ -16,6 +16,8 @@ https://damienbod.com/2022/09/19/asp-net-core-api-auth-with-multiple-identity-pr
 
 ## History
 
+2023-03-02 Update packages .NET 7
+
 2022-11-19 Update packages to latest LTS, added multi AAD API
 
 # Links

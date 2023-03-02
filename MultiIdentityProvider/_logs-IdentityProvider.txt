@@ -1,0 +1,69 @@
+2023-03-02 22:12:11.069 +01:00 [INF] User profile is available. Using 'C:\Users\damien.bowden\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-03-02 22:12:11.236 +01:00 [INF] Initialized Scheduler Signaller of type: Quartz.Core.SchedulerSignalerImpl
+2023-03-02 22:12:11.237 +01:00 [INF] Quartz Scheduler created
+2023-03-02 22:12:11.243 +01:00 [INF] JobFactory set to: Quartz.Simpl.MicrosoftDependencyInjectionJobFactory
+2023-03-02 22:12:11.244 +01:00 [INF] RAMJobStore initialized.
+2023-03-02 22:12:11.244 +01:00 [INF] Quartz Scheduler 3.6.2.0 - 'QuartzScheduler' with instanceId 'NON_CLUSTERED' initialized
+2023-03-02 22:12:11.245 +01:00 [INF] Using thread pool 'Quartz.Simpl.DefaultThreadPool', size: 10
+2023-03-02 22:12:11.246 +01:00 [INF] Using job store 'Quartz.Simpl.RAMJobStore', supports persistence: False, clustered: False
+2023-03-02 22:12:11.254 +01:00 [INF] Adding 1 jobs, 1 triggers.
+2023-03-02 22:12:11.255 +01:00 [INF] Adding job: OpenIddict/Quartz.NET integration.OpenIddict job
+2023-03-02 22:12:12.188 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "type" = 'table' AND "rootpage" IS NOT NULL;
+2023-03-02 22:12:12.456 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__identifier_0='?' (Size = 22)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2023-03-02 22:12:12.537 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@__identifier_0='?' (Size = 2)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2023-03-02 22:12:12.539 +01:00 [INF] Executed DbCommand (0ms) [Parameters=[@__identifier_0='?' (Size = 22)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ClientId", "o"."ClientSecret", "o"."ConcurrencyToken", "o"."ConsentType", "o"."DisplayName", "o"."DisplayNames", "o"."Permissions", "o"."PostLogoutRedirectUris", "o"."Properties", "o"."RedirectUris", "o"."Requirements", "o"."Type"
+FROM "OpenIddictApplications" AS "o"
+WHERE "o"."ClientId" = @__identifier_0
+LIMIT 1
+2023-03-02 22:12:12.559 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[@__name_0='?' (Size = 16)], CommandType='"Text"', CommandTimeout='30']
+SELECT "o"."Id", "o"."ConcurrencyToken", "o"."Description", "o"."Descriptions", "o"."DisplayName", "o"."DisplayNames", "o"."Name", "o"."Properties", "o"."Resources"
+FROM "OpenIddictScopes" AS "o"
+WHERE "o"."Name" = @__name_0
+LIMIT 1
+2023-03-02 22:12:13.144 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-03-02 22:12:13.145 +01:00 [INF] Hosting environment: Development
+2023-03-02 22:12:13.145 +01:00 [INF] Content root path: C:\repos\git\damienbod\AspNetCoreApiAuthMultiIdentityProvider\MultiIdentityProvider\IdentityProvider
+2023-03-02 22:12:13.160 +01:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED started.
+2023-03-02 22:12:13.188 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/ - -
+2023-03-02 22:12:13.352 +01:00 [INF] Executing endpoint 'OpeniddictServer.Controllers.HomeController.Index (IdentityProvider)'
+2023-03-02 22:12:13.362 +01:00 [INF] Route matched with {action = "Index", controller = "Home", page = "", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller OpeniddictServer.Controllers.HomeController (IdentityProvider).
+2023-03-02 22:12:13.440 +01:00 [INF] Executing action method OpeniddictServer.Controllers.HomeController.Index (IdentityProvider) - Validation state: "Valid"
+2023-03-02 22:12:13.447 +01:00 [INF] Executed action method OpeniddictServer.Controllers.HomeController.Index (IdentityProvider), returned result Microsoft.AspNetCore.Mvc.ViewResult in 1.4097ms.
+2023-03-02 22:12:16.243 +01:00 [INF] Executing ViewResult, running view Index.
+2023-03-02 22:12:17.468 +01:00 [INF] Executed ViewResult - view Index executed in 4012.6499ms.
+2023-03-02 22:12:17.475 +01:00 [INF] Executed action OpeniddictServer.Controllers.HomeController.Index (IdentityProvider) in 4111.8739ms
+2023-03-02 22:12:17.476 +01:00 [INF] Executed endpoint 'OpeniddictServer.Controllers.HomeController.Index (IdentityProvider)'
+2023-03-02 22:12:17.539 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/ - - - 200 - text/html;+charset=utf-8 4351.3976ms
+2023-03-02 22:12:17.546 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/lib/bootstrap/dist/css/bootstrap.min.css - -
+2023-03-02 22:12:17.546 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/_framework/aspnetcore-browser-refresh.js - -
+2023-03-02 22:12:17.547 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/lib/bootstrap/dist/js/bootstrap.bundle.min.js - -
+2023-03-02 22:12:17.578 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/css/site.css - -
+2023-03-02 22:12:17.586 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0 - -
+2023-03-02 22:12:17.597 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/lib/jquery/dist/jquery.min.js - -
+2023-03-02 22:12:17.608 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/_framework/aspnetcore-browser-refresh.js - - - 200 12002 application/javascript;+charset=utf-8 55.4084ms
+2023-03-02 22:12:17.621 +01:00 [INF] Sending file. Request path: '/js/site.js'. Physical path: 'C:\repos\git\damienbod\AspNetCoreApiAuthMultiIdentityProvider\MultiIdentityProvider\IdentityProvider\wwwroot\js\site.js'
+2023-03-02 22:12:17.623 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/js/site.js?v=4q1jwFhaPaZgr8WAUSrux6hAuh0XDg9kPS3xIVq36I0 - - - 200 230 text/javascript 37.0067ms
+2023-03-02 22:12:17.625 +01:00 [INF] Sending file. Request path: '/css/site.css'. Physical path: 'C:\repos\git\damienbod\AspNetCoreApiAuthMultiIdentityProvider\MultiIdentityProvider\IdentityProvider\wwwroot\css\site.css'
+2023-03-02 22:12:17.625 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'C:\repos\git\damienbod\AspNetCoreApiAuthMultiIdentityProvider\MultiIdentityProvider\IdentityProvider\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js'
+2023-03-02 22:12:17.625 +01:00 [INF] Sending file. Request path: '/lib/jquery/dist/jquery.min.js'. Physical path: 'C:\repos\git\damienbod\AspNetCoreApiAuthMultiIdentityProvider\MultiIdentityProvider\IdentityProvider\wwwroot\lib\jquery\dist\jquery.min.js'
+2023-03-02 22:12:17.625 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/css/site.css - - - 200 1417 text/css 61.7301ms
+2023-03-02 22:12:17.626 +01:00 [INF] Sending file. Request path: '/lib/bootstrap/dist/css/bootstrap.min.css'. Physical path: 'C:\repos\git\damienbod\AspNetCoreApiAuthMultiIdentityProvider\MultiIdentityProvider\IdentityProvider\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css'
+2023-03-02 22:12:17.644 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/lib/bootstrap/dist/css/bootstrap.min.css - - - 200 155764 text/css 97.5137ms
+2023-03-02 22:12:17.644 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/lib/bootstrap/dist/js/bootstrap.bundle.min.js - - - 200 78641 text/javascript 97.1600ms
+2023-03-02 22:12:17.644 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/lib/jquery/dist/jquery.min.js - - - 200 89478 text/javascript 46.7516ms
+2023-03-02 22:12:17.993 +01:00 [INF] Request starting HTTP/2 GET https://localhost:44318/_vs/browserLink - -
+2023-03-02 22:12:18.041 +01:00 [INF] Request finished HTTP/2 GET https://localhost:44318/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 47.3259ms
+2023-03-02 22:12:28.804 +01:00 [INF] Application is shutting down...
+2023-03-02 22:12:28.809 +01:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED shutting down.
+2023-03-02 22:12:28.810 +01:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED paused.
+2023-03-02 22:12:28.817 +01:00 [INF] Scheduler QuartzScheduler_$_NON_CLUSTERED Shutdown complete.
