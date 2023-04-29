@@ -99,32 +99,6 @@ public class Startup
             };
         });
 
-        // Remove this if using multiple schemes, version 4.3.0 breaks other JWT
-        // Register the OpenIddict validation components.
-        //services.AddOpenIddict() // Scheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme
-        //    .AddValidation(options =>
-        //    {
-        //        // Note: the validation handler uses OpenID Connect discovery
-        //        // to retrieve the address of the introspection endpoint.
-        //        options.SetIssuer("https://localhost:44318/");
-        //        options.AddAudiences("rs_dataEventRecordsApi");
-
-        //        // Configure the validation handler to use introspection and register the client
-        //        // credentials used when communicating with the remote introspection endpoint.
-        //        //options.UseIntrospection()
-        //        //        .SetClientId("rs_dataEventRecordsApi")
-        //        //        .SetClientSecret("dataEventRecordsSecret");
-
-        //        // disable access token encryption for this
-        //        options.UseAspNetCore();
-
-        //        // Register the System.Net.Http integration.
-        //        options.UseSystemNetHttp();
-
-        //        // Register the ASP.NET Core host.
-        //        options.UseAspNetCore();
-        //    });
-
         services.AddSingleton<IAuthorizationHandler, AllSchemesHandler>();
 
         services.AddAuthorization(options =>
