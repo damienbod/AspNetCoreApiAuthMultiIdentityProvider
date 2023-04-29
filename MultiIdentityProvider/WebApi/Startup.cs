@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
-using OpenIddict.Validation.AspNetCore;
 
 namespace WebApi;
 
@@ -51,6 +50,19 @@ public class Startup
                 ValidIssuers = Configuration.GetSection("ValidIssuers").Get<string[]>()
             };
         })
+        .AddJwtBearer(Consts.MY_OPENIDDICT_SCHEME, options =>
+        {
+            options.Authority = Consts.MY_OPENIDDICT_ISS;
+            options.Audience = "rs_dataEventRecordsApi";
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidAudiences = Configuration.GetSection("ValidAudiences").Get<string[]>(),
+                ValidIssuers = Configuration.GetSection("ValidIssuers").Get<string[]>()
+            };
+        })
         .AddPolicyScheme("UNKNOWN", "UNKNOWN", options =>
         {
             options.ForwardDefaultSelector = context =>
@@ -67,7 +79,7 @@ public class Startup
                         var issuer = jwtHandler.ReadJwtToken(token).Issuer;
                         if(issuer == Consts.MY_OPENIDDICT_ISS) // OpenIddict
                         {
-                            return OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+                            return Consts.MY_OPENIDDICT_SCHEME;
                         }
 
                         if (issuer == Consts.MY_AUTH0_ISS) // Auth0
@@ -87,30 +99,31 @@ public class Startup
             };
         });
 
+        // Remove this if using multiple schemes, version 4.3.0 breaks other JWT
         // Register the OpenIddict validation components.
-        services.AddOpenIddict() // Scheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme
-            .AddValidation(options =>
-            {
-                // Note: the validation handler uses OpenID Connect discovery
-                // to retrieve the address of the introspection endpoint.
-                options.SetIssuer("https://localhost:44318/");
-                options.AddAudiences("rs_dataEventRecordsApi");
+        //services.AddOpenIddict() // Scheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme
+        //    .AddValidation(options =>
+        //    {
+        //        // Note: the validation handler uses OpenID Connect discovery
+        //        // to retrieve the address of the introspection endpoint.
+        //        options.SetIssuer("https://localhost:44318/");
+        //        options.AddAudiences("rs_dataEventRecordsApi");
 
-                // Configure the validation handler to use introspection and register the client
-                // credentials used when communicating with the remote introspection endpoint.
-                //options.UseIntrospection()
-                //        .SetClientId("rs_dataEventRecordsApi")
-                //        .SetClientSecret("dataEventRecordsSecret");
+        //        // Configure the validation handler to use introspection and register the client
+        //        // credentials used when communicating with the remote introspection endpoint.
+        //        //options.UseIntrospection()
+        //        //        .SetClientId("rs_dataEventRecordsApi")
+        //        //        .SetClientSecret("dataEventRecordsSecret");
 
-                // disable access token encryption for this
-                options.UseAspNetCore();
+        //        // disable access token encryption for this
+        //        options.UseAspNetCore();
 
-                // Register the System.Net.Http integration.
-                options.UseSystemNetHttp();
+        //        // Register the System.Net.Http integration.
+        //        options.UseSystemNetHttp();
 
-                // Register the ASP.NET Core host.
-                options.UseAspNetCore();
-            });
+        //        // Register the ASP.NET Core host.
+        //        options.UseAspNetCore();
+        //    });
 
         services.AddSingleton<IAuthorizationHandler, AllSchemesHandler>();
 
