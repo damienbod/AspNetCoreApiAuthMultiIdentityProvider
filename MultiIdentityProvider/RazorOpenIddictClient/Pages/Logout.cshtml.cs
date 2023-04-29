@@ -5,19 +5,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RazorPageOidcClient.Pages
+namespace RazorPageOidcClient.Pages;
+
+[Authorize]
+public class LogoutModel : PageModel
 {
-    [Authorize]
-    public class LogoutModel : PageModel
+public IActionResult OnGetAsync()
+{
+    return SignOut(new AuthenticationProperties
     {
-    public IActionResult OnGetAsync()
-    {
-        return SignOut(new AuthenticationProperties
-        {
-            RedirectUri = "/SignedOut"
-        },
-        CookieAuthenticationDefaults.AuthenticationScheme,
-        OpenIdConnectDefaults.AuthenticationScheme);
-    }
-    }
+        RedirectUri = "/SignedOut"
+    },
+    CookieAuthenticationDefaults.AuthenticationScheme,
+    OpenIdConnectDefaults.AuthenticationScheme);
+}
 }
