@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 /AadMultiApis/_logs-MultiAADWebApi.txt
 /AadMultiApis/_logs-TestMultiApis.txt
+/MultiIdentityProvider/_logs*
+/MultiIdentityProvider/_logs-IdentityProvider.txt
