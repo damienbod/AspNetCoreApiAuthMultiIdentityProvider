@@ -2,29 +2,30 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using Microsoft.IdentityModel.Logging;
+using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace RazorAzureAD;
 
-public class Startup
+internal static class HostingExtensions
 {
-    public Startup(IConfiguration configuration)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
         services.AddTransient<SingleTenantApiService>();
         services.AddTransient<MultiTenantApplicationApiService>();
         services.AddHttpClient();
 
         services.AddOptions();
 
-        string[]? initialScopes = Configuration.GetValue<string>("AzureADSingleApi:ScopeForAccessToken")?.Split(' ');
+        string[]? initialScopes = configuration.GetValue<string>("AzureADSingleApi:ScopeForAccessToken")?.Split(' ');
 
-        services.AddMicrosoftIdentityWebAppAuthentication(Configuration)
+        services.AddMicrosoftIdentityWebAppAuthentication(configuration)
             .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
             .AddInMemoryTokenCaches();
 
@@ -35,21 +36,29 @@ public class Startup
                 .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
         }).AddMicrosoftIdentityUI();
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
-        if (env.IsDevelopment())
+        IdentityModelEventSource.ShowPII = true;
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+        app.UseSerilogRequestLogging();
+
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
         else
         {
             app.UseExceptionHandler("/Error");
+            app.UseHsts();
         }
 
         app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
+            SecurityHeadersDefinitions.GetHeaderPolicyCollection(_env!.IsDevelopment()));
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
@@ -59,10 +68,9 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapRazorPages();
-            endpoints.MapControllers();
-        });
+        app.MapRazorPages();
+        app.MapControllers();
+
+        return app;
     }
 }
