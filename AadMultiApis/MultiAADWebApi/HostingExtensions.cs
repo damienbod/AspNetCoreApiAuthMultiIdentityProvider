@@ -1,26 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
+using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WebApi;
 
-public class Startup
+internal static class HostingExtensions
 {
-    public Startup(IConfiguration configuration)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
         services.AddAuthentication(Consts.AAD_MULTI_SCHEME)
-            .AddMicrosoftIdentityWebApi(Configuration, "AzureADMultiApi", Consts.AAD_MULTI_SCHEME);
+    .AddMicrosoftIdentityWebApi(configuration, "AzureADMultiApi", Consts.AAD_MULTI_SCHEME);
 
         services.AddAuthentication(Consts.AAD_SINGLE_SCHEME)
-            .AddMicrosoftIdentityWebApi(Configuration, "AzureADSingleApi", Consts.AAD_SINGLE_SCHEME);
+            .AddMicrosoftIdentityWebApi(configuration, "AzureADSingleApi", Consts.AAD_SINGLE_SCHEME);
 
         services.AddAuthorization(policies =>
         {
@@ -34,7 +34,7 @@ public class Startup
                 p.RequireClaim("azp", "967925d5-87ea-46e6-b0eb-1223c001fd77");
 
                 // client secret = 1, 2 if certificate is used
-                p.RequireClaim("azpacr", "1"); 
+                p.RequireClaim("azpacr", "1");
             });
 
             policies.AddPolicy(Consts.SINGLE_AAD_POLICY, p =>
@@ -56,14 +56,18 @@ public class Startup
                 .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
         });
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
         //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        if (env.IsDevelopment())
+        app.UseSerilogRequestLogging();
+        
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -78,9 +82,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.MapControllers();
+
+        return app;
     }
 }

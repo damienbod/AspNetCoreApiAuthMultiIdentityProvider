@@ -1,31 +1,29 @@
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace RazorPageOidcClient;
 
-public class Startup
+internal static class HostingExtensions
 {
-    public Startup(IConfiguration configuration)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
         services.AddTransient<ApiService>();
         services.AddSingleton<ApiTokenInMemoryClient>();
         services.AddSingleton<ApiTokenCacheClient>();
 
         services.AddHttpClient();
 
-        var stsServer = Configuration["OpenIDConnectSettings:Authority"];
+        var stsServer = configuration["OpenIDConnectSettings:Authority"];
 
         services.AddAuthentication(options =>
         {
@@ -35,17 +33,17 @@ public class Startup
         .AddCookie()
         .AddOpenIdConnect(options =>
         {
-            Configuration.GetSection("OpenIDConnectSettings").Bind(options);
-            options.Authority = Configuration["OpenIDConnectSettings:Authority"];
-            options.ClientId = Configuration["OpenIDConnectSettings:ClientId"];
-            options.ClientSecret = Configuration["OpenIDConnectSettings:ClientSecret"];
+            configuration.GetSection("OpenIDConnectSettings").Bind(options);
+            options.Authority = configuration["OpenIDConnectSettings:Authority"];
+            options.ClientId = configuration["OpenIDConnectSettings:ClientId"];
+            options.ClientSecret = configuration["OpenIDConnectSettings:ClientSecret"];
 
             options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             options.ResponseType = OpenIdConnectResponseType.Code;
 
             options.SaveTokens = true;
             options.GetClaimsFromUserInfoEndpoint = true;
-			options.TokenValidationParameters = new TokenValidationParameters
+            options.TokenValidationParameters = new TokenValidationParameters
             {
                 NameClaimType = "name"
             };
@@ -53,14 +51,18 @@ public class Startup
 
         services.AddAuthorization();
         services.AddRazorPages();
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        if (env.IsDevelopment())
+        app.UseSerilogRequestLogging();
+
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -78,9 +80,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapRazorPages();
-        });
+        app.MapRazorPages();
+
+        return app;
     }
 }

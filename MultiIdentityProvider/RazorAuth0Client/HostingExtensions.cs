@@ -5,22 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace RazorAuth0Client;
 
-public class Startup
+internal static class HostingExtensions
 {
-    public Startup(IConfiguration configuration)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.Configure<Auth0ApiConfiguration>(Configuration.GetSection("Auth0ApiConfiguration"));
+        services.Configure<Auth0ApiConfiguration>(configuration.GetSection("Auth0ApiConfiguration"));
         services.AddScoped<Auth0CCTokenApiService>();
         services.AddScoped<WebApiClient>();
 
@@ -40,9 +39,9 @@ public class Startup
         })
         .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
         {
-            options.Authority = $"https://{Configuration["Auth0:Domain"]}";
-            options.ClientId = Configuration["Auth0:ClientId"];
-            options.ClientSecret = Configuration["Auth0:ClientSecret"];
+            options.Authority = $"https://{configuration["Auth0:Domain"]}";
+            options.ClientId = configuration["Auth0:ClientId"];
+            options.ClientSecret = configuration["Auth0:ClientSecret"];
             options.ResponseType = OpenIdConnectResponseType.Code;
             options.Scope.Clear();
             options.Scope.Add("openid");
@@ -61,7 +60,7 @@ public class Startup
                 // handle the logout redirection 
                 OnRedirectToIdentityProviderForSignOut = (context) =>
                 {
-                    var logoutUri = $"https://{Configuration["Auth0:Domain"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}";
+                    var logoutUri = $"https://{configuration["Auth0:Domain"]}/v2/logout?client_id={configuration["Auth0:ClientId"]}";
 
                     var postLogoutUri = context.Properties.RedirectUri;
                     if (!string.IsNullOrEmpty(postLogoutUri))
@@ -104,14 +103,18 @@ public class Startup
                 .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
         });
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        if (env.IsDevelopment())
+        app.UseSerilogRequestLogging();
+
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -121,7 +124,7 @@ public class Startup
         }
 
         app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(env.IsDevelopment()));
+            SecurityHeadersDefinitions.GetHeaderPolicyCollection(_env!.IsDevelopment()));
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
@@ -131,10 +134,9 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapRazorPages();
-            endpoints.MapControllers();
-        });
+        app.MapRazorPages();
+        app.MapControllers();
+
+        return app;
     }
 }

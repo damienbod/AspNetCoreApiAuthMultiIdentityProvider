@@ -1,22 +1,21 @@
-﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
+using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace WebApi;
 
-public class Startup
+internal static class HostingExtensions
 {
-    public Startup(IConfiguration configuration)
+    private static IWebHostEnvironment? _env;
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Configuration = configuration;
-    }
+        var services = builder.Services;
+        var configuration = builder.Configuration;
+        _env = builder.Environment;
 
-    public IConfiguration Configuration { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = "UNKNOWN";
@@ -32,22 +31,22 @@ public class Startup
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateIssuerSigningKey = true,
-                ValidAudiences = Configuration.GetSection("ValidAudiences").Get<string[]>(),
-                ValidIssuers = Configuration.GetSection("ValidIssuers").Get<string[]>()
+                ValidAudiences = configuration.GetSection("ValidAudiences").Get<string[]>(),
+                ValidIssuers = configuration.GetSection("ValidIssuers").Get<string[]>()
             };
         })
         .AddJwtBearer(Consts.MY_AAD_SCHEME, jwtOptions =>
         {
-            jwtOptions.MetadataAddress = Configuration["AzureAd:MetadataAddress"]; 
-            jwtOptions.Authority = Configuration["AzureAd:Authority"];
-            jwtOptions.Audience = Configuration["AzureAd:Audience"]; 
+            jwtOptions.MetadataAddress = configuration["AzureAd:MetadataAddress"]!;
+            jwtOptions.Authority = configuration["AzureAd:Authority"];
+            jwtOptions.Audience = configuration["AzureAd:Audience"];
             jwtOptions.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateIssuerSigningKey = true,
-                ValidAudiences = Configuration.GetSection("ValidAudiences").Get<string[]>(),
-                ValidIssuers = Configuration.GetSection("ValidIssuers").Get<string[]>()
+                ValidAudiences = configuration.GetSection("ValidAudiences").Get<string[]>(),
+                ValidIssuers = configuration.GetSection("ValidIssuers").Get<string[]>()
             };
         })
         .AddJwtBearer(Consts.MY_OPENIDDICT_SCHEME, options =>
@@ -59,25 +58,25 @@ public class Startup
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateIssuerSigningKey = true,
-                ValidAudiences = Configuration.GetSection("ValidAudiences").Get<string[]>(),
-                ValidIssuers = Configuration.GetSection("ValidIssuers").Get<string[]>()
+                ValidAudiences = configuration.GetSection("ValidAudiences").Get<string[]>(),
+                ValidIssuers = configuration.GetSection("ValidIssuers").Get<string[]>()
             };
         })
         .AddPolicyScheme("UNKNOWN", "UNKNOWN", options =>
         {
             options.ForwardDefaultSelector = context =>
             {
-                string authorization = context.Request.Headers[HeaderNames.Authorization];
+                string authorization = context.Request.Headers[HeaderNames.Authorization]!;
                 if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
                 {
                     var token = authorization.Substring("Bearer ".Length).Trim();
                     var jwtHandler = new JwtSecurityTokenHandler();
 
                     // it's a self contained access token and not encrypted
-                    if (jwtHandler.CanReadToken(token)) 
+                    if (jwtHandler.CanReadToken(token))
                     {
                         var issuer = jwtHandler.ReadJwtToken(token).Issuer;
-                        if(issuer == Consts.MY_OPENIDDICT_ISS) // OpenIddict
+                        if (issuer == Consts.MY_OPENIDDICT_ISS) // OpenIddict
                         {
                             return Consts.MY_OPENIDDICT_SCHEME;
                         }
@@ -110,14 +109,18 @@ public class Startup
         });
 
         services.AddControllers();
-    }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        return builder.Build();
+    }
+    
+    public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         IdentityModelEventSource.ShowPII = true;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        if (env.IsDevelopment())
+        app.UseSerilogRequestLogging();
+
+        if (_env!.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -132,9 +135,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers().RequireAuthorization();
-        });
+        app.MapControllers().RequireAuthorization();
+
+        return app;
     }
 }
