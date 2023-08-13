@@ -11,11 +11,11 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) => lc
+    builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-            .WriteTo.File("../_logs-MultiAADWebApi.txt")
-            .Enrich.FromLogContext()
-            .ReadFrom.Configuration(ctx.Configuration));
+        .WriteTo.File("../_logs-MultiAADWebApi.txt")
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(context.Configuration));
 
     var app = builder
         .ConfigureServices()
