@@ -15,15 +15,15 @@ internal static class HostingExtensions
         var configuration = builder.Configuration;
         _env = builder.Environment;
 
-        services.AddAuthentication(Consts.AAD_MULTI_SCHEME)
-    .AddMicrosoftIdentityWebApi(configuration, "AzureADMultiApi", Consts.AAD_MULTI_SCHEME);
+        services.AddAuthentication(Consts.MICROSOFT_ENTRA_ID_MULTI_SCHEME)
+    .AddMicrosoftIdentityWebApi(configuration, "AzureADMultiApi", Consts.MICROSOFT_ENTRA_ID_MULTI_SCHEME);
 
-        services.AddAuthentication(Consts.AAD_SINGLE_SCHEME)
-            .AddMicrosoftIdentityWebApi(configuration, "AzureADSingleApi", Consts.AAD_SINGLE_SCHEME);
+        services.AddAuthentication(Consts.MICROSOFT_ENTRA_ID_SINGLE_SCHEME)
+            .AddMicrosoftIdentityWebApi(configuration, "AzureADSingleApi", Consts.MICROSOFT_ENTRA_ID_SINGLE_SCHEME);
 
         services.AddAuthorization(policies =>
         {
-            policies.AddPolicy(Consts.MUTLI_AAD_POLICY, p =>
+            policies.AddPolicy(Consts.MUTLI_MICROSOFT_ENTRA_ID_POLICY, p =>
             {
                 // application access token
                 // "roles": [
@@ -36,7 +36,7 @@ internal static class HostingExtensions
                 p.RequireClaim("azpacr", "1");
             });
 
-            policies.AddPolicy(Consts.SINGLE_AAD_POLICY, p =>
+            policies.AddPolicy(Consts.SINGLE_MICROSOFT_ENTRA_ID_POLICY, p =>
             {
                 // delegated access token => "scp": "access_as_user",
                 // "azp": "46d2f651-813a-4b5c-8a43-63abcb4f692c",
@@ -51,7 +51,7 @@ internal static class HostingExtensions
         {
             var policy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .AddAuthenticationSchemes(Consts.AAD_MULTI_SCHEME, Consts.AAD_SINGLE_SCHEME)
+                .AddAuthenticationSchemes(Consts.MICROSOFT_ENTRA_ID_MULTI_SCHEME, Consts.MICROSOFT_ENTRA_ID_SINGLE_SCHEME)
                 .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
         });

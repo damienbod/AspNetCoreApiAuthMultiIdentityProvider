@@ -36,7 +36,7 @@ internal static class HostingExtensions
                 ValidIssuers = configuration.GetSection("ValidIssuers").Get<string[]>()
             };
         })
-        .AddJwtBearer(Consts.MY_AAD_SCHEME, jwtOptions =>
+        .AddJwtBearer(Consts.MY_MICROSOFT_ENTRA_ID_SCHEME, jwtOptions =>
         {
             jwtOptions.MetadataAddress = configuration["AzureAd:MetadataAddress"]!;
             jwtOptions.Authority = configuration["AzureAd:Authority"];
@@ -87,15 +87,15 @@ internal static class HostingExtensions
                             return Consts.MY_AUTH0_SCHEME;
                         }
 
-                        if (issuer == Consts.MY_AAD_ISS) // AAD
+                        if (issuer == Consts.MY_MICROSOFT_ENTRA_ID_ISS) // Microsoft Entra ID
                         {
-                            return Consts.MY_AAD_SCHEME;
+                            return Consts.MY_MICROSOFT_ENTRA_ID_SCHEME;
                         }
                     }
                 }
 
                 // We don't know what it is
-                return Consts.MY_AAD_SCHEME;
+                return Consts.MY_MICROSOFT_ENTRA_ID_SCHEME;
             };
         });
 

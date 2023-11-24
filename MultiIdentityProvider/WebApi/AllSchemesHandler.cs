@@ -35,7 +35,7 @@ public class AllSchemesHandler : AuthorizationHandler<AllSchemesRequirement>
             }
         }
 
-        if (issuer == Consts.MY_AAD_ISS) // AAD
+        if (issuer == Consts.MY_MICROSOFT_ENTRA_ID_ISS) // AAD
         {
             // "azp": "--your-azp-claim-value--",
             var azpClaim = context.User.Claims.FirstOrDefault(c => c.Type == "azp"
