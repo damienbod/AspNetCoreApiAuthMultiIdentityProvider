@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RazorAzureAD.Pages;
+namespace RazorMicrosoftEntraID.Pages;
 
 public class IndexModel : PageModel
 {

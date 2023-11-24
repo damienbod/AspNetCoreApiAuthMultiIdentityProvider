@@ -1,4 +1,4 @@
-using RazorAzureAD;
+using RazorMicrosoftEntraID;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

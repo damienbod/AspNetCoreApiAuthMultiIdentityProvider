@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Serilog;
 
-namespace RazorAzureAD;
+namespace RazorMicrosoftEntraID;
 
 internal static class HostingExtensions
 {

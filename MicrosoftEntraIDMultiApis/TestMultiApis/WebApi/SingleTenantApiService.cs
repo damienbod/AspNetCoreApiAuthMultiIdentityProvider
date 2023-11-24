@@ -1,7 +1,7 @@
 ﻿using Microsoft.Identity.Web;
 using System.Net.Http.Headers;
 
-namespace RazorAzureAD;
+namespace RazorMicrosoftEntraID;
 
 public class SingleTenantApiService
 {
