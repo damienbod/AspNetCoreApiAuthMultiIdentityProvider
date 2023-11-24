@@ -15,7 +15,6 @@ https://damienbod.com/2022/11/21/use-multiple-azure-ad-access-tokens-in-an-asp-n
 
 ![multiple Microsoft Entra ID APIs same IDP](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/blob/main/images/multiApiAAD_01.png)
 
-
 ## History
 
 - 2023-11-23 Update .NET 8
