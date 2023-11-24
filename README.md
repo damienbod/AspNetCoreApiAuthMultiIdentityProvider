@@ -9,15 +9,15 @@ https://damienbod.com/2022/09/19/asp-net-core-api-auth-with-multiple-identity-pr
 
 ![multiple APIs same IDP](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/blob/main/images/api_multi_idps_01.png)
 
-## ASP.NET Core Api AAD with multiple access tokens
+## ASP.NET Core Api Microsoft Entra ID with multiple access tokens
 
 https://damienbod.com/2022/11/21/use-multiple-azure-ad-access-tokens-in-an-asp-net-core-api/
 
-![multiple AAD APIs same IDP](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/blob/main/images/multiApiAAD_01.png)
-
+![multiple Microsoft Entra ID APIs same IDP](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/blob/main/images/multiApiAAD_01.png)
 
 ## History
 
+- 2023-11-23 Update .NET 8
 - 2023-11-04 Update packages, improved security headers
 - 2023-08-13 Update packages, improve startup 
 - 2023-04-29 Update packages
