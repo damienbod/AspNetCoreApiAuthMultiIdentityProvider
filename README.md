@@ -3,15 +3,11 @@
 
 [![.NET](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/actions/workflows/dotnet.yml/badge.svg)](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/actions/workflows/dotnet.yml)
 
-## ASP.NET Core Api Auth with multiple Identity Providers
-
-https://damienbod.com/2022/09/19/asp-net-core-api-auth-with-multiple-identity-providers/
+[ASP.NET Core Api Auth with multiple Identity Providers](https://damienbod.com/2022/09/19/asp-net-core-api-auth-with-multiple-identity-providers/)
 
 ![multiple APIs same IDP](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/blob/main/images/api_multi_idps_01.png)
 
-## ASP.NET Core Api Microsoft Entra ID with multiple access tokens
-
-https://damienbod.com/2022/11/21/use-multiple-azure-ad-access-tokens-in-an-asp-net-core-api/
+[ASP.NET Core Api Microsoft Entra ID with multiple access tokens](https://damienbod.com/2022/11/21/use-multiple-azure-ad-access-tokens-in-an-asp-net-core-api/)
 
 ![multiple Microsoft Entra ID APIs same IDP](https://github.com/damienbod/AspNetCoreApiAuthMultiIdentityProvider/blob/main/images/multiApiAAD_01.png)
 
