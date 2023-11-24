@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{E7FC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorOpenIddictClient", "RazorOpenIddictClient\RazorOpenIddictClient.csproj", "{C1F8CC2E-2106-47DA-94AB-A77DEF1DC120}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorAzureADClient", "RazorAzureADClient\RazorAzureADClient.csproj", "{6C3342E1-2FB2-4AED-BCC2-019A242A2003}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorMicrosoftEntraIDClient", "RazorMicrosoftEntraIDClient\RazorMicrosoftEntraIDClient.csproj", "{6C3342E1-2FB2-4AED-BCC2-019A242A2003}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorAuth0Client", "RazorAuth0Client\RazorAuth0Client.csproj", "{82DAFE0F-ED1F-46D8-8B6C-158919A9CFCC}"
 EndProject

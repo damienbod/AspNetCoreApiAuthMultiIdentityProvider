@@ -1,11 +1,11 @@
-using RazorAzureAD;
+using RazorMicrosoftEntraID;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
 
-Log.Information("Starting up RazorAzureAD");
+Log.Information("Starting up RazorMicrosoftEntraID");
 
 try
 {
@@ -13,7 +13,7 @@ try
 
     builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
-        .WriteTo.File("../_logs-RazorAzureAD.txt")
+        .WriteTo.File("../_logs-RazorMicrosoftEntraID.txt")
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(context.Configuration));
 
