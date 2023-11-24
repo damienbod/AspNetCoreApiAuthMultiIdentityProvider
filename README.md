@@ -22,7 +22,7 @@ https://damienbod.com/2022/11/21/use-multiple-azure-ad-access-tokens-in-an-asp-n
 - 2023-08-13 Update packages, improve startup 
 - 2023-04-29 Update packages
 - 2023-03-02 Update packages .NET 7
-- 2022-11-19 Update packages to latest LTS, added multi AAD API
+- 2022-11-19 Update packages to latest LTS, added multi Microsoft Entra ID API
 
 ## Links
 
