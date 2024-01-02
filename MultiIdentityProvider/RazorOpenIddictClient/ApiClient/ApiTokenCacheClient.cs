@@ -51,7 +51,7 @@ public class ApiTokenCacheClient
         _logger.LogDebug("GetApiToken new from STS for {api_name}", api_name);
 
         // add
-        var newAccessToken = await GetApiTokenInternal( api_name,  api_scope,  secret);
+        var newAccessToken = await GetApiTokenInternal(api_name, api_scope, secret);
         AddToCache(api_name, newAccessToken);
 
         return newAccessToken.AccessToken;
@@ -90,7 +90,7 @@ public class ApiTokenCacheClient
                 ExpiresIn = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn),
                 AccessToken = tokenResponse.AccessToken
             };
-            
+
         }
         catch (Exception e)
         {

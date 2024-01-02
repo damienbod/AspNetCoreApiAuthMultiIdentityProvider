@@ -18,6 +18,6 @@ public class DelegatedFailApiModel : PageModel
     public async Task OnGetAsync()
     {
         // Must fail
-        DataFromApi  = await _apiService.GetApiDataAsync(true);
+        DataFromApi = await _apiService.GetApiDataAsync(true);
     }
 }

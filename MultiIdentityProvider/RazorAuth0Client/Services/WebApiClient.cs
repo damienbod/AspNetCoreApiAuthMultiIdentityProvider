@@ -27,7 +27,7 @@ public class WebApiClient
 
         var access_token = await _auth0TokenApiService.GetApiToken(client, "WebApiCcToken");
 
-        client.DefaultRequestHeaders.Authorization 
+        client.DefaultRequestHeaders.Authorization
             = new AuthenticationHeaderValue("Bearer", access_token);
 
         var response = await client.GetAsync("api/Values");
@@ -36,7 +36,7 @@ public class WebApiClient
             var data = await JsonSerializer.DeserializeAsync<List<string>>(
             await response.Content.ReadAsStreamAsync());
 
-            if(data != null)
+            if (data != null)
                 return data;
         }
 

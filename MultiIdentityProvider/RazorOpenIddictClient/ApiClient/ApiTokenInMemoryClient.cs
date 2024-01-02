@@ -1,5 +1,4 @@
 ﻿using IdentityModel.Client;
-using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
 
 namespace RazorPageOidcClient;
@@ -47,7 +46,7 @@ public class ApiTokenInMemoryClient
         _logger.LogDebug("GetApiToken new from STS for {api_name}", api_name);
 
         // add
-        var newAccessToken = await GetApiTokenInternal( api_name,  api_scope,  secret);
+        var newAccessToken = await GetApiTokenInternal(api_name, api_scope, secret);
         _accessTokens.TryAdd(api_name, newAccessToken);
 
         return newAccessToken.AccessToken;
@@ -86,7 +85,7 @@ public class ApiTokenInMemoryClient
                 ExpiresIn = DateTime.UtcNow.AddSeconds(tokenResponse.ExpiresIn),
                 AccessToken = tokenResponse.AccessToken
             };
-            
+
         }
         catch (Exception e)
         {

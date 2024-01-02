@@ -10,7 +10,7 @@ public class ApiService
     private readonly ApiTokenCacheClient _apiTokenClient;
 
     public ApiService(
-        IConfiguration configuration, 
+        IConfiguration configuration,
         IHttpClientFactory clientFactory,
         ApiTokenCacheClient apiTokenClient)
     {
@@ -64,7 +64,7 @@ public class ApiService
             client.SetBearerToken(access_token);
 
             var response = await client.GetAsync("api/values");
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 var data = await JsonSerializer.DeserializeAsync<List<string>>(
                 await response.Content.ReadAsStreamAsync());

@@ -35,7 +35,7 @@ public class WebApiValuesService
             var responseContent = await response.Content.ReadAsStringAsync();
             var data = System.Text.Json.JsonSerializer.Deserialize<List<string>>(responseContent);
 
-            if(data != null)
+            if (data != null)
                 return data;
         }
 

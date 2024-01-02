@@ -1,5 +1,5 @@
-﻿using WebApi;
-using Serilog;
+﻿using Serilog;
+using WebApi;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -21,9 +21,9 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-app.Run();
+    app.Run();
 }
-catch (Exception ex) when(ex.GetType().Name is not "StopTheHostException" && ex.GetType().Name is not "HostAbortedException")
+catch (Exception ex) when (ex.GetType().Name is not "StopTheHostException" && ex.GetType().Name is not "HostAbortedException")
 {
     Log.Fatal(ex, "Unhandled exception");
 }

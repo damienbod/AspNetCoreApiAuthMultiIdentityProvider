@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace RazorAuth0Client;
+﻿namespace RazorAuth0Client;
 
 public static class SecurityHeadersDefinitions
 {

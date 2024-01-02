@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-
-namespace RazorMicrosoftEntraID;
+﻿namespace RazorMicrosoftEntraID;
 
 public static class SecurityHeadersDefinitions
 {

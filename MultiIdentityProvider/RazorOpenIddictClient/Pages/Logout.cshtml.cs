@@ -10,13 +10,13 @@ namespace RazorPageOidcClient.Pages;
 [Authorize]
 public class LogoutModel : PageModel
 {
-public IActionResult OnGetAsync()
-{
-    return SignOut(new AuthenticationProperties
+    public IActionResult OnGetAsync()
     {
-        RedirectUri = "/SignedOut"
-    },
-    CookieAuthenticationDefaults.AuthenticationScheme,
-    OpenIdConnectDefaults.AuthenticationScheme);
-}
+        return SignOut(new AuthenticationProperties
+        {
+            RedirectUri = "/SignedOut"
+        },
+        CookieAuthenticationDefaults.AuthenticationScheme,
+        OpenIdConnectDefaults.AuthenticationScheme);
+    }
 }

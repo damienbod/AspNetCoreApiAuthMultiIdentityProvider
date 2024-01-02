@@ -8,14 +8,14 @@ public class AllSchemesHandler : AuthorizationHandler<AllSchemesRequirement>
         AllSchemesRequirement requirement)
     {
         var issuer = string.Empty;
-  
+
         var issClaim = context.User.Claims.FirstOrDefault(c => c.Type == "iss");
         if (issClaim != null)
             issuer = issClaim.Value;
 
         if (issuer == Consts.MY_OPENIDDICT_ISS) // OpenIddict
         {
-            var scopeClaim = context.User.Claims.FirstOrDefault(c => c.Type == "scope" 
+            var scopeClaim = context.User.Claims.FirstOrDefault(c => c.Type == "scope"
                 && c.Value == "dataEventRecords");
             if (scopeClaim != null)
             {
