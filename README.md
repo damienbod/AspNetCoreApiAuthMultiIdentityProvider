@@ -13,6 +13,7 @@
 
 ## History
 
+- 2024-01-02 Update packages
 - 2023-11-23 Update .NET 8
 - 2023-11-04 Update packages, improved security headers
 - 2023-08-13 Update packages, improve startup 
