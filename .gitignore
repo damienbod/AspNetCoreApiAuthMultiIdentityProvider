@@ -348,7 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/MultiIdentityProvider/_logs*
-/AadMultiApis/_logs**
 
 /MicrosoftEntraIDMultiApis/_logs*
+/MultiIdentityProvider/_logs**
