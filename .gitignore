@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 /MultiIdentityProvider/_logs*
 /AadMultiApis/_logs**
+
+/MicrosoftEntraIDMultiApis/_logs*
