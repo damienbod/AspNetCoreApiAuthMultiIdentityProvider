@@ -16,11 +16,11 @@ internal static class HostingExtensions
         _env = builder.Environment;
 
         services.AddAuthentication(Consts.MICROSOFT_ENTRA_ID_MULTI_SCHEME)
-            .AddMicrosoftIdentityWebApi(configuration, 
+            .AddMicrosoftIdentityWebApi(configuration,
                 "AzureADMultiApi", Consts.MICROSOFT_ENTRA_ID_MULTI_SCHEME);
 
         services.AddAuthentication(Consts.MICROSOFT_ENTRA_ID_SINGLE_SCHEME)
-            .AddMicrosoftIdentityWebApi(configuration, 
+            .AddMicrosoftIdentityWebApi(configuration,
                 "AzureADSingleApi", Consts.MICROSOFT_ENTRA_ID_SINGLE_SCHEME);
 
         services.AddAuthorization(policies =>
