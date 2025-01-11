@@ -10,12 +10,10 @@ namespace WebApi;
 
 internal static class HostingExtensions
 {
-    private static IWebHostEnvironment? _env;
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
-        _env = builder.Environment;
 
         services.AddAuthentication(options =>
         {
@@ -121,7 +119,7 @@ internal static class HostingExtensions
 
         app.UseSerilogRequestLogging();
 
-        if (_env!.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
