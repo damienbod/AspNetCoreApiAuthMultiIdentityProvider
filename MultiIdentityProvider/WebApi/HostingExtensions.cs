@@ -69,12 +69,12 @@ internal static class HostingExtensions
                 if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
                 {
                     var token = authorization.Substring("Bearer ".Length).Trim();
-                    var jwtHandler = new JwtSecurityTokenHandler();
+                    var jwtHandler = new JsonWebTokenHandler();
 
                     // it's a self contained access token and not encrypted
                     if (jwtHandler.CanReadToken(token))
                     {
-                        var issuer = jwtHandler.ReadJwtToken(token).Issuer;
+                        var issuer = jwtHandler.ReadJsonWebToken(token).Issuer;
                         if (issuer == Consts.MY_OPENIDDICT_ISS) // OpenIddict
                         {
                             return Consts.MY_OPENIDDICT_SCHEME;
