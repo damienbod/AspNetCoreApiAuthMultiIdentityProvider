@@ -10,12 +10,10 @@ namespace RazorMicrosoftEntraID;
 
 internal static class HostingExtensions
 {
-    private static IWebHostEnvironment? _env;
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
-        _env = builder.Environment;
 
         services.AddTransient<SingleTenantApiService>();
         services.AddTransient<MultiTenantApplicationApiService>();
@@ -47,7 +45,7 @@ internal static class HostingExtensions
 
         app.UseSerilogRequestLogging();
 
-        if (_env!.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -57,8 +55,8 @@ internal static class HostingExtensions
             app.UseHsts();
         }
 
-        app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(_env!.IsDevelopment()));
+        app.UseSecurityHeaders(SecurityHeadersDefinitions
+            .GetHeaderPolicyCollection(app.Environment.IsDevelopment()));
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();

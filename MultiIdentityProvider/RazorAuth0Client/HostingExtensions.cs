@@ -12,12 +12,10 @@ namespace RazorAuth0Client;
 
 internal static class HostingExtensions
 {
-    private static IWebHostEnvironment? _env;
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
-        _env = builder.Environment;
 
         services.Configure<Auth0ApiConfiguration>(configuration.GetSection("Auth0ApiConfiguration"));
         services.AddScoped<Auth0CCTokenApiService>();
@@ -114,7 +112,7 @@ internal static class HostingExtensions
 
         app.UseSerilogRequestLogging();
 
-        if (_env!.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
@@ -124,7 +122,7 @@ internal static class HostingExtensions
         }
 
         app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(_env!.IsDevelopment()));
+            SecurityHeadersDefinitions.GetHeaderPolicyCollection(app.Environment.IsDevelopment()));
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
