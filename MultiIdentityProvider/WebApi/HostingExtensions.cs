@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Serilog;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace WebApi;
 
