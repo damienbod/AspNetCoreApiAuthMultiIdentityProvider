@@ -4,6 +4,7 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
+using RazorMicrosoftEntraIDClient;
 using Serilog;
 
 namespace RazorMicrosoftEntraID;
