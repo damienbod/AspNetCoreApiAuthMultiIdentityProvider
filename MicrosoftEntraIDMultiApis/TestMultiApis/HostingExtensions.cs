@@ -4,6 +4,7 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using Serilog;
 
 namespace RazorMicrosoftEntraID;
@@ -35,6 +36,13 @@ internal static class HostingExtensions
             options.Filters.Add(new AuthorizeFilter(policy));
         }).AddMicrosoftIdentityUI();
 
+        services.AddSecurityHeaderPolicies()
+           .SetPolicySelector((PolicySelectorContext ctx) =>
+           {
+               return SecurityHeadersDefinitions
+                 .GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+           });
+
         return builder.Build();
     }
 
@@ -55,8 +63,7 @@ internal static class HostingExtensions
             app.UseHsts();
         }
 
-        app.UseSecurityHeaders(SecurityHeadersDefinitions
-            .GetHeaderPolicyCollection(app.Environment.IsDevelopment()));
+        app.UseSecurityHeaders();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();

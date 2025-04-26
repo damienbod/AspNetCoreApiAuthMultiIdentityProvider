@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using NetEscapades.AspNetCore.SecurityHeaders.Infrastructure;
 using Serilog;
 
 namespace RazorAuth0Client;
@@ -102,6 +103,13 @@ internal static class HostingExtensions
             options.Filters.Add(new AuthorizeFilter(policy));
         });
 
+        services.AddSecurityHeaderPolicies()
+           .SetPolicySelector((PolicySelectorContext ctx) =>
+           {
+               return SecurityHeadersDefinitions
+                 .GetHeaderPolicyCollection(builder.Environment.IsDevelopment());
+           });
+
         return builder.Build();
     }
 
@@ -121,8 +129,7 @@ internal static class HostingExtensions
             app.UseExceptionHandler("/Error");
         }
 
-        app.UseSecurityHeaders(
-            SecurityHeadersDefinitions.GetHeaderPolicyCollection(app.Environment.IsDevelopment()));
+        app.UseSecurityHeaders();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
