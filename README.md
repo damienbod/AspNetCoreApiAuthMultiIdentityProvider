@@ -13,6 +13,7 @@
 
 ## History
 
+- 2025-08-03 Updated packages
 - 2025-04-26 Updated packages
 - 2025-02-13 Updated packages
 - 2024-12-31 Updated packages, .NET 9, Bootstrap 5, OpenIddict V6
