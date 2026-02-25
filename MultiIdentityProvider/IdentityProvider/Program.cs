@@ -1,4 +1,4 @@
-using OpeniddictServer;
+using IdentityProvider;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

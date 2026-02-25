@@ -1,15 +1,14 @@
-using Fido2Identity;
-using Fido2NetLib;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
-using OpeniddictServer.Data;
+using IdentityProvider.Data;
+using IdentityProvider.Passkeys;
 using Quartz;
 using Serilog;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using Microsoft.IdentityModel.JsonWebTokens;
 
-namespace OpeniddictServer;
+namespace IdentityProvider;
 
 internal static class HostingExtensions
 {
@@ -21,9 +20,11 @@ internal static class HostingExtensions
         services.AddControllersWithViews();
         services.AddRazorPages();
 
+        services.AddHttpContextAccessor();
+
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            // Configure the context to use Microsoft SQL Server.
+            // Configure the context to use Microsoft SQLite.
             options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
 
             // Register the entity sets needed by OpenIddict.
@@ -34,14 +35,13 @@ internal static class HostingExtensions
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders()
-          .AddDefaultUI()
-          .AddTokenProvider<Fido2UserTwoFactorTokenProvider>("FIDO2");
-
-        services.Configure<Fido2Configuration>(configuration.GetSection("fido2"));
-        services.AddScoped<Fido2Store>();
+        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+        {
+            options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
+        })
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders()
+        .AddDefaultUI();
 
         services.AddDistributedMemoryCache();
 
@@ -77,21 +77,6 @@ internal static class HostingExtensions
         {
             options.UseSimpleTypeLoader();
             options.UseInMemoryStore();
-        });
-
-        services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAllOrigins",
-                builder =>
-                {
-                    builder
-                        .AllowCredentials()
-                        .WithOrigins(
-                            "https://localhost:4200")
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
         });
 
         // Register the Quartz.NET service and configure it to block shutdown until jobs are complete.
@@ -162,7 +147,6 @@ internal static class HostingExtensions
         // Note: in a real world application, this step should be part of a setup script.
         services.AddHostedService<Worker>();
 
-
         return builder.Build();
     }
 
@@ -185,21 +169,23 @@ internal static class HostingExtensions
             //app.UseHsts();
         }
 
-        app.UseCors("AllowAllOrigins");
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
 
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapStaticAssets();
+        app.UseAntiforgery();
 
         app.UseSession();
 
+        app.MapPasskeyEndpoints();
+
         app.MapControllers();
         app.MapDefaultControllerRoute();
-        app.MapRazorPages();
+        app.MapRazorPages()
+            .WithStaticAssets();
 
         return app;
     }
